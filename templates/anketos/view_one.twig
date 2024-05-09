@@ -1,0 +1,107 @@
+{{ include("header.twig") }}
+
+<main class="page project-page">
+    <section class="portfolio-block project">
+        <div class="container">
+            <div class="heading">
+                <h2>{{ anketa.gyvuno_vardas }}</h2>
+            </div>
+            <div class="image" style="background-image:url(../assets/img/gyvuneliai/{{ anketa.pagr_nuotraukos_pav }});"></div>
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-1 info">
+                    <h4>Aprašymas</h4>
+                    <span>Amžius: {{ anketa.gyvuno_amzius }}</span>
+                    <br><span>Gyvūno vardas: {{anketa.gyvuno_vardas }}</span>
+                    <br> <span>Gyvūno rūšis: {{anketa.gyvuno_pav }}</span>
+                    <br><span>lytis: {{ anketa.lytis }}</span>
+                    <br> <span>Aprašymas: {{ anketa.aprasymas }}</span>
+                </div>
+                <div class="col-12 col-md-3 offset-md-1 meta">
+                    <div class="tags">
+                        <span class="meta-heading">Dingimo data</span>
+                        <span>{{ anketa.dingimo_data }}</span>
+                        <span class="meta-heading">Lokacijos duomenys</span>
+                        <span>Miestas: {{ anketa.miestas }}</span>
+                        <span>Rajonas: {{ anketa.rajonas }}</span>
+                        <span>Gatvė: {{ anketa.gatve }}</span>
+                        <span>Apskritis: {{ anketa.apskritis }}</span>
+                        <span>
+                            {% if prieiga == "Administratorius" %}
+                                <a href="/redaguoti-anketa/{{ anketa.id }}"><i class="fa fa-edit fa-fw"></i></a>&nbsp;&nbsp;
+                            {% endif %}
+
+                            {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                <a href="javascript:void(0);" data-id="{{ anketa.id }}" class="delete-task"><i class="fa fa-trash fa-fw"></i></a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="more-projects">
+                <h3 class="text-center">Daugiau nuotraukų</h3>
+                <div class="row gallery">
+
+                    {% for nuotrauka in nuotraukos %}
+                        <div class="col-md-4 col-lg-3">
+                            <div class="item">
+                                <a href="#" data-toggle="modal" data-target="#modalAnketosNuotraukosPerz">
+                                    <img class="img-fluid scale-on-hover" src="../assets/img/gyvuneliai/{{ nuotrauka.nuotraukos_pav }}">
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{#modalinis langas nuotrauku leistuvui#}
+<div class="modal" role="dialog" tabindex="-1" id="modalAnketosNuotraukosPerz">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="height: 40px;padding-top: 10px;"><button class="close" type="button" aria-label="Close" data-dismiss="modal"><span aria-hidden="true">×</span></button></div>
+            <div class="modal-body" style="padding-top: 0px;padding-bottom: 5px;">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12" id="div-modal-preke-column" style="padding-bottom: 10px;">
+                    <div id="div-modal-preke-div" class="clean-product-item" style="padding: 10px;padding-bottom: 5px;padding-top: 10px;">
+                        <h6>Vardas: {{ anketa.gyvuno_vardas }}</h6>
+                        <div class="carousel slide" data-ride="carousel" id="carousel-1">
+                            <div class="carousel-inner">
+
+                                {% for nuotrauka in nuotraukos %}
+                                    {% if anketa.pagr_nuotraukos_id == nuotrauka.id %}
+                                        <div class="carousel-item active"><img class="w-100 d-block" src="../assets/img/gyvuneliai/{{ nuotrauka.nuotraukos_pav }}" alt="Slide Image"></div>
+                                    {% else %}
+                                        <div class="carousel-item"><img class="w-100 d-block" src="../assets/img/gyvuneliai/{{ nuotrauka.nuotraukos_pav }}" alt="Slide Image"></div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div>
+                                <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-1" data-slide-to="1"></li>
+                                <li data-target="#carousel-1" data-slide-to="2"></li>
+                            </ol>
+                        </div>
+                        <div class="product-name" style="font-size: 14px;color: rgb(24,76,118);margin-bottom: 5px;">
+                            <p class="text-left" style="margin-bottom: 5px;">
+                                <br>Aprašymas: {{ anketa.aprasymas }}
+                                <br></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ include("footer.twig") }}

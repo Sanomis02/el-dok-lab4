@@ -1,0 +1,23 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>{{ todo.pavadinimas }}</h1>
+        <span><a style="color:white;" href="/redaguoti-gyvuna/{{ todo.id }}"><i class="fa fa-edit fa-2x"></i></a></span>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Pavadinimas</h2>
+                <br>
+                <p>{{ todo.pavadinimas }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{ include("footer.twig") }}

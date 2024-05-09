@@ -1,0 +1,175 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white" style="max-height: 100px;vertical-align: center;horiz-align: center;padding-top: 85px;padding-bottom: 35px;padding-left:60px;padding-right: 60px;">
+    <div class="container text-center">
+        <h4>Skelbimas </h4>
+    </div>
+</header>
+
+<section id="about" style="padding-top: 10px;padding-bottom: 40px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+
+                <br>
+                <div class="card__item card__body" style="padding: 20px;">
+                    <div class="card" style="margin-bottom: 10px">
+                        <div class="card__wrapper">
+
+
+                            <div class="card__box">
+                                <div class="card__item card__header">
+                                    <h6 class="card__item card__item--small card__label" align="center"><br>Skelbimo Anketiniai duomenys</h6>
+                                    <h4 class="card__item card__item--small card__title" align="center">{{ skelbimas.skelbimo_anketa.gyvuno_vardas }}</h4>
+                                </div>
+                                <div style="text-align: center;">
+                                    <img src="/assets/img/gyvuneliai/{{ skelbimas.skelbimo_anketa.pagr_nuotraukos_pav }}" class="img-fluid d-block mx-auto image" alt="dingęs" style="width: 400px" >
+                                </div>
+
+                                <div class="align-content-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                    <div class="row" style="margin: 0">
+
+                                        <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+
+                                                <span class="text-left">
+                                                    skelbimai id : {{ skelbimas.id }}
+                                                    <br>Peržiūrų kiekis: {{ perziuru_skaicius_naujas }}
+                                                    <br>skelbimo data: {{ skelbimas.skelbimo_data }}
+                                                    <br>Galioja iki: {{ skelbimas.galiojimo_laikas }}
+                                                    <br>prieigos sesija: {{ prieiga }}
+                                                </span>
+                                        </div>
+
+                                        <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 15px;">
+                                                <span class="text-left">
+                                                    Amžius: {{ skelbimas.skelbimo_anketa.gyvuno_amzius }}
+                                                    <br>Gyvūno vardas: {{ skelbimas.skelbimo_anketa.gyvuno_vardas }}
+                                                    <br>lytis: {{ skelbimas.skelbimo_anketa.lytis }}
+                                                    <br>Gyvūno rūšis: {{ skelbimas.skelbimo_anketa.gyvuno_pav }}
+                                                    <br>Dingimo laikas: {{ skelbimas.skelbimo_anketa.dingimo_data }}
+                                                    <br>Miestas: {{  skelbimas.skelbimo_anketa.miestas }}
+                                                    <br>Gatvė: {{ skelbimas.skelbimo_anketa.gatve }}
+                                                    <br>Rajonas: {{ skelbimas.skelbimo_anketa.rajonas }}
+                                                    <br>Apskritis: {{ skelbimas.skelbimo_anketa.apskritis }}
+                                                </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin: 0">
+                                        <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                             <span class="text-left">
+                                                    <br>Anketos tekstas: {{ skelbimas.skelbimo_anketa.aprasymas }}
+                                          </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin: 0">
+                                        <div class="col text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                                <span class="text-left">
+                                                    <b>Skelbimo tekstas:</b> {{ skelbimas.aprasymas }}
+                                                </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin: 0">
+                                        <div class="col text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                            <a href="/anketa/{{ skelbimas.anketa_id }}" target="_blank" title="Peržiūrėti anketinius duomenis naujame skirtuke"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp;
+
+                                            {% if prieiga == "Administratorius" %}
+                                                <a href="/redaguoti-skelbima/{{ skelbimas.id }}"><i class="fa fa-edit fa-fw"></i></a>&nbsp;&nbsp;
+                                            {% endif %}
+
+                                            {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                                <a href="javascript:void(0);" data-id="{{ skelbimas.id }}" class="delete-task"><i class="fa fa-trash fa-fw"></i></a>
+                                            {% endif %}
+
+
+                                        </div>
+                                    </div>
+                                    {#                                    naujos zinutes rasymo div-as#}
+                                    <div class="row" style="margin: 0">
+                                        <div class="col text-center" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                            <form method="post" action="/rasyti-nauja-zinute/{{ skelbimas.id }}">
+                                                <input type="hidden" name="autoriaus_id" id="autoriaus_id" value="{{ prisijunges_vartotojas.id }}" />
+                                                <input type="hidden" name="skelbimo_id" id="skelbimo_id" value="{{ skelbimas.id }}" />
+
+                                                <p style="margin-bottom: 2px">&nbsp;&nbsp;<b>Šio skelbimo naujos žinutės tekstas:</b></p>
+                                                <div class="input-group input-group-sm text-left">
+                                                    <textarea name="turinys" id="turinys" class="form-control" placeholder="įrašykite naują žinutę - skelbkite atsakingai, gerbkite kitus" style="font-size: 1rem;margin-left: 5px;margin-right: 15px"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                                        <button type="submit" class="btn btn-primary">skelbti žinutę</button>
+                                                    {% endif %}
+                                                </div>
+
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                    {#                                    skelbimo zinutes#}
+                                    {% if zinutes %}
+
+                                        <div class="row" style="margin: 0">
+                                            <div class="col text-left" style="margin: 5px;margin-left: 25px;margin-top: 25px">
+                                                <h4>Skelbimo žinutės</h4>
+                                                {% for zinute in zinutes %}
+                                                    <div class="content text-left" style="margin-top: 20px;margin-bottom: 10px;padding: 3px;padding-left: 10px;border: 1px solid #9c9c9c;border-radius: 3.2px;">
+                                                        <b>Žinutės data:</b> {{ zinute.zinutes_data }}
+                                                        <br>Žinutės id: {{ zinute.id }}
+                                                        <br>Prisijunges: {{ prisijunges_vartotojas.vardas }}
+                                                        <br>Autoriaus id: {{ zinute.autoriaus_id }}
+                                                        <br>Autoriaus vardas: {{ zinute.zinutes_autorius.vardas }}
+                                                        <br><b>Žinutės turinys:</b> {{ zinute.turinys }}
+                                                    </div>
+                                                {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{ include("footer.twig") }}
+<script>
+    $(document).ready(function(){
+        $("#quick-save").on("click",function(){
+            console.log("Hello World");
+            var task = $("#quick-task").val();
+            if(task !== undefined && task !==""){
+                console.log(task);
+                $.post("/quickAdd",{task:task},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+        $(".delete-task").on("click",function(){
+            var taskId = $(this).data("id");
+            check = confirm("Ištrinti anketą? kurio id:"+taskId);
+            if(check){
+                $.post('/delete',{anketa:taskId},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+    });
+</script>

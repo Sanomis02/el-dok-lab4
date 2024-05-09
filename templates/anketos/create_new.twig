@@ -1,0 +1,178 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white" style="max-height: 100px;vertical-align: center;horiz-align: center;padding: 100px;">
+    <div class="container text-center">
+        <h4>Naujos anketos sukūrimas</h4>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+
+                {#       pridėjimo forma#}
+                <form method="post" action="/prideti-anketa">
+{#kad butu laukas tuščias - naujoje anketoje pagrindinės foto nebus - ją pridėsime koreguodami#}
+                    <input type="hidden" name="pagr_nuotraukos_id" id="pagr_nuotraukos_id">
+                    <div class="form-group">
+                        <br><button type="submit" class="btn btn-primary">Išsaugoti</button>
+                    </div>
+
+                    <div class="row" id="div-gyvuno_vardas-gyvuno_amzius-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-gyvuno_vardas-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="gyvuno_vardas">Vardas
+                                    <input name="gyvuno_vardas" value="" type="text" class="form-control" id="gyvuno_vardas">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-gyvuno_amzius-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="gyvuno_amzius">Amžius
+                                    <input name="gyvuno_amzius" value="" type="text" class="form-control" id="gyvuno_amzius">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div-fk_rusies_id-lytis-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-fk_rusies_id-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="fk_rusies_id">Gyvunų rūšis
+                                    <select class="form-control" name="fk_rusies_id" id="fk_rusies_id">
+                                        {% for rusis in rusys %}
+                                                <option value={{ rusis.id }} >{{ rusis.pavadinimas }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-fk_rusies_id-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="lytis">Lytis
+                                    <select class="form-control" name="lytis" id="lytis">
+                                        <option value="vyras">Vyras</option>
+                                        <option value="moteris">Moteris</option>
+                                        <option value="neapibrezta">Neapibrėžta</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div-ar_Rastas-gatve-miestas-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-ar_Rastas-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+
+                                <label for="ar_Rastas">Ar rastas
+                                    <select class="form-control" name="ar_Rastas" id="ar_Rastas">
+                                            <option value="1" >Rastas</option>
+                                            <option value="0" selected >Nerastas</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-gatve-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="gatve">Gatvė
+                                    <input name="gatve" value="" type="text" class="form-control" id="gatve">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-miestas-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="miestas">Miestas
+                                    <input name="miestas" value="" type="text" class="form-control" id="miestas">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div-apskritis-rajonas-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-apskritis-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="apskritis">Apskritis
+                                    <select class="form-control" name="apskritis" id="apskritis">
+                                        <option value="Kaunas" selected>Kaunas</option>
+                                        <option value="Alytus">Alytus</option>
+                                        <option value="Klaipeda">Klaipeda</option>
+                                        <option value="Marijampole">Marijampole</option>
+                                        <option value="Panevezys">Panevezys</option>
+                                        <option value="Siauliai">Siauliai</option>
+                                        <option value="Taurage">Taurage</option>
+                                        <option value="Telsiai">Telsiai</option>
+                                        <option value="Utena">Utena</option>
+                                        <option value="Vilnius">Vilnius</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-rajonas-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="rajonas">Rajonas
+                                    <input name="rajonas" value="" type="text" class="form-control" id="rajonas">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div-autorius_id-fk_Naudotojasid-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-autorius_id-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="autorius_id">Autoriaus vardas
+                                    <select class="form-control" name="autorius_id" id="autorius_id">
+                                        {% for vartotojas in vartotojai %}
+                                                <option value={{ vartotojas.id }} >{{ vartotojas.vardas }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-fk_Naudotojasid-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="fk_Naudotojasid">Naudotojas
+                                    <select class="form-control" name="fk_Naudotojasid" id="fk_Naudotojasid">
+                                        {% for vartotojas in vartotojai %}
+                                                <option value={{ vartotojas.id }} >{{ vartotojas.vardas }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div-aprasymas-dingimo_data-row" style="margin: 0px;border-bottom: none">
+                        <div class="col" id="div-aprasymas-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="input-group input-group-sm text-left">
+                                <label for="aprasymas">Aprašymas: &nbsp;
+                                    <textarea name="aprasymas" id="aprasymas" class="form-control" rows="2"></textarea>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col" id="div-dingimo_data-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <label for="dingimo_data">Dingimo data
+                                    <input name="dingimo_data" value="{{ dabartine_data }}" type="datetime-local" class="form-control" id="dingimo_data">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="div-apatinis_issaugojimo_mygt-row" style="margin: 0px;border-bottom: #6d8ba4 solid 2px">
+                        <div class="col" id="div-apatinis_issaugojimo_mygt-column" style="padding-right: 5px;padding-left: 5px;margin: 10px">
+                            <div class="form-group">
+                                <br><button type="submit" class="btn btn-primary">Išsaugoti</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{ include("footer.twig") }}

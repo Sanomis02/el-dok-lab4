@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{{ pageTitle }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ base_url() }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ base_url }}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ base_url() }}/css/scrolling-nav.css" rel="stylesheet">
+    <link href="{{ base_url() }}/vendor/bootstrap/css/pikaday.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/">{{ pageTitle }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+
+                {% if prieiga is not empty %}
+                    <li class="nav-item dropdown" id="navbar-virsutin-titles1-turi-items-li">
+                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
+                            Skelbimai&nbsp;</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/skelbimai">visi skelbimai</a>
+                            <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-skelbima">Sukurti naują skelbimą</a>
+                        </div>
+                    </li>
+                {% endif %}
+
+                {% if prieiga is not empty %}
+                <li class="nav-item dropdown" id="navbar-virsutin-titles2-turi-items-li">
+                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
+                        Anketos&nbsp;</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/anketos">visos anketos</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-anketa">Sukurti gyvūno anketą</a>
+{#                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items3-a" href="#">dar kas nors</a>#}
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if prieiga is not empty %}
+                <li class="nav-item dropdown" id="navbar-virsutin-titles4-turi-items-li">
+                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
+                        Gyvūnų rūšys&nbsp;</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/gyvunai">visi gyvūnai</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-gyvuna">Sukurti gyvūno rūšies aprašymą</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items3-a" href="#">dar kas nors</a>
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if prieiga=="Administratorius" %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/vartotojai">Visi vartotojai</a>
+                </li>
+                {% endif %}
+
+                {% if prieiga is empty %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/sukurti-vartotoja">Registracija</a>
+                </li>
+                {% endif %}
+
+                {% if prieiga is empty %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/login">Prisijungti</a>
+                    </li>
+                {% endif %}
+
+                {% if prieiga is not empty %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/iseiti">Išeiti</a>
+                    </li>
+                {% endif %}
+
+                {% if prieiga is not empty %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" style="color:red;">Statusas: {{ prieiga }}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

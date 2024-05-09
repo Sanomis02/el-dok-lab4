@@ -1,0 +1,72 @@
+version: '3'
+services:
+
+    animals-php-cli:
+        build:
+            context: ./docker/development
+            dockerfile: php-cli.docker
+        volumes:
+            - .:/app
+            - composer:/root/.composer/cache
+        depends_on:
+            - animals_mysql
+
+    animals_mysql:
+        image: mysql:5.7
+        restart: always
+        command: [ 'mysqld', '--character-set-server=utf8', '--collation-server=utf8_unicode_ci' ]
+        environment:
+            # So you don't have to use root, but you can if you like - juo prisijungiam su PHPMyAdmin
+            MYSQL_USER: 'simasmysqle'
+            # You can use whatever password you like
+            MYSQL_PASSWORD: '123456'
+            # Password for root user access
+            MYSQL_DATABASE: 'animals'
+            MYSQL_ROOT_PASSWORD: 'rootpassw'
+        ports:
+            # <Port exposed> : < MySQL Port running inside container>
+            - '3306:3306'
+            # Where our data will be persisted
+        volumes:
+            - animals_mysql:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5.1
+        container_name: 'phpmyadmin'
+        environment:
+            PMA_HOST: animals_mysql
+            PMA_PORT: 3306
+        ports:
+            - '8090:80'
+    #     ieiname su root
+    #     kaip ir MYSQL_DATABASE: 'arvidija'
+    #      MYSQL_ROOT_PASSWORD: 'rootpassw'
+
+    animals-php-slim:
+        build:
+            context: ./docker/development
+            dockerfile: php-slim.docker
+        command: php -S 0.0.0.0:8080 -t public
+        environment:
+            docker: "true"
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/app
+        depends_on:
+            - animals_mysql
+
+
+#    buvo slim:
+#        image: php:7.2-alpine
+#        working_dir: /app
+#        command: php -S 0.0.0.0:8080 -t public
+#        environment:
+#            docker: "true"
+#        ports:
+#            - 8080:8080
+#        volumes:
+#            - .:/app
+volumes:
+    animals_mysql:
+    composer:

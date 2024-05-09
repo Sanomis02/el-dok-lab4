@@ -1,0 +1,176 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white" style="max-height: 100px;vertical-align: center;horiz-align: center;padding-top: 85px;padding-bottom: 35px;padding-left:60px;padding-right: 60px;">
+    <div class="container text-center">
+        <h4>Skelbimo redagavimas </h4>
+    </div>
+</header>
+
+<section id="about" style="padding-top: 10px;padding-bottom: 40px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+                {% if dangerMessage is not empty %}
+                    <br><div class="alert alert-danger" role="alert">
+                    {{ dangerMessage }}
+                </div>
+                {% endif %}
+
+                <br>
+                <div class="card__item card__body" style="padding: 20px;">
+                    <div class="card" style="margin-bottom: 10px">
+
+                        <div class="card__box">
+                            <div class="card__item card__header">
+                                <h6 class="card__item card__item--small card__label" align="center"><br>Skelbimo redaguojami duomenys</h6>
+                                <h4 class="card__item card__item--small card__title" align="center">{{ skelbimas.skelbimo_anketa.gyvuno_vardas }}</h4>
+                            </div>
+                            <div style="text-align: center;">
+                                <img src="/assets/img/gyvuneliai/{{ skelbimas.skelbimo_anketa.pagr_nuotraukos_pav }}" class="img-fluid d-block mx-auto image" alt="dingęs" style="width: 400px" >
+                            </div>
+
+                            <form method="post" action="/atnaujinti-skelbima/{{ skelbimas.id }}">
+
+                                <input type="hidden" name="perziuros_kiekis" id="perziuros_kiekis" value="{{ skelbimas.perziuros_kiekis }}" >
+                                <input type="hidden" name="skelbimo_data" id="skelbimo_data" value="{{ skelbimas.skelbimo_data }}" >
+
+                                <div class="align-content-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                    <div class="row" style="margin: 0">
+                                        <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;">
+
+                                            <div class="form-group">
+
+                                                <label for="anketa_id" style="margin: 0">Skelbimo anketa</label>
+                                                <select class="form-control" name="anketa_id" id="anketa_id">
+                                                    {% for anketa in anketos %}
+                                                        {% if skelbimas.anketa_id == anketa.id %}
+                                                            <option value="{{ anketa.id }}" selected>{{ anketa.gyvuno_vardas }}&nbsp;amžius:&nbsp;{{ anketa.gyvuno_amzius }}&nbsp;anketa:&nbsp;{{ anketa.id }}</option>
+                                                        {% else %}
+                                                            <option value="{{ anketa.id }}" >{{ anketa.gyvuno_vardas }}&nbsp;amžius:&nbsp;{{ anketa.gyvuno_amzius }}&nbsp;anketa:&nbsp;{{ anketa.id }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+
+                                                <label for="autorius_id" style="margin: 0;margin-top: 5px">Skelbimo Autorius</label>
+                                                <select class="form-control" name="autorius_id" id="autorius_id">
+                                                    {% for vartotojas in vartotojai %}
+                                                        {% if skelbimas.autorius_id == vartotojas.id %}
+                                                            <option value="{{ vartotojas.id }}" selected>{{ vartotojas.vardas }}</option>
+                                                        {% else %}
+                                                            <option value="{{ vartotojas.id }}" >{{ vartotojas.vardas }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                                <br><b>Skelbimo data:</b> {{ skelbimas.skelbimo_data }}
+
+                                                <label for="galiojimo_laikas" style="margin: 0;margin-top: 5px"><b>Iki kada galioja skelbimas</b>
+                                                    <input name="galiojimo_laikas" value="{{ skelbimas.galiojimo_laikas }}" type="datetime-local" class="form-control" id="galiojimo_laikas">
+                                                </label>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;">
+
+                                            <div class="form-group">
+                                                <label for="rusies_id" style="margin: 0">Gyvuno rūšis</label>
+                                                <select class="form-control" name="rusies_id" id="rusies_id" readonly disabled>
+                                                    {% for rusis in rusys %}
+                                                        {% if skelbimas.rusies_id == rusis.id %}
+                                                            <option value="{{ rusis.id }}" selected>{{ rusis.pavadinimas }}</option>
+                                                        {% else %}
+                                                            <option value="{{ rusis.id }}" >{{ rusis.pavadinimas }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+
+                                                <b>skelbimo id</b> : {{ skelbimas.id }}
+                                                <br>Gyvūno vardas: {{ skelbimas.skelbimo_anketa.gyvuno_vardas }}
+                                                <br>sesija: {{ prieiga }}
+                                                <br>lytis: {{ skelbimas.skelbimo_anketa.lytis }}
+                                                <br><b>Dingimo laikas:</b> {{ skelbimas.skelbimo_anketa.dingimo_data }}
+
+
+                                                <label for="ar_aktyvus" style="margin: 0;margin-top: 5px">Ar aktyvus skelbimas
+                                                    <select class="form-control" name="ar_aktyvus" id="ar_aktyvus">
+                                                        {% if skelbimas.ar_aktyvus == 1 %}
+                                                            <option value="1" selected>Aktyvus</option>
+                                                            <option value="0" >Neaktyvus</option>
+                                                        {% else %}
+                                                            <option value="1" >Aktyvus</option>
+                                                            <option value="0" selected>Neaktyvus</option>
+                                                        {% endif %}
+                                                    </select>
+                                                </label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 2px;">
+                                        <div class="col" style="padding-right: 5px;padding-left: 5px;">
+                                            <div class="align-content-left" style="border:1px solid rgba(0,0,0,.125);border-radius: 3.2px;margin: 5px;margin-right: 15px;padding: 5px;padding-right: 10px;padding-left: 10px">
+                                                <p style="margin-bottom: 2px"><b>Anketos tekstas:</b> {{ skelbimas.skelbimo_anketa.aprasymas }}</p>
+                                            </div>
+                                            <p style="margin-bottom: 2px">&nbsp;&nbsp;<b>Skelbimo tekstas:</b></p>
+                                            <div class="input-group input-group-sm text-left">
+                                                <textarea name="aprasymas" id="aprasymas" class="form-control" style="font-size: 1rem;margin-left: 5px;margin-right: 15px">{{ skelbimas.aprasymas }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin: 0">
+                                        <div class="col text-center" style="margin: 5px;margin-left: 15px;">
+                                            <div class="form-group">
+                                                {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                                    <button type="submit" class="btn btn-primary">Išsaugoti</button>
+                                                {% endif %}
+{#                                                <a href="/anketa/{{ skelbimas.anketa_id }}" target="_blank" title="Peržiūrėti anketinius duomenis naujame skirtuke"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp;#}
+                                                <a href="/skelbimas/{{ skelbimas.id }}" title="Peržiūrėti"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp;
+                                                {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                                    <a href="javascript:void(0);" data-id="{{ skelbimas.id }}" class="delete-task"><i class="fa fa-trash fa-fw" style="color: red"></i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{{ include("footer.twig") }}
+<script>
+    $(document).ready(function(){
+        $("#quick-save").on("click",function(){
+            console.log("Hello World");
+            var task = $("#quick-task").val();
+            if(task !== undefined && task !==""){
+                console.log(task);
+                $.post("/quickAdd",{task:task},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+        $(".delete-task").on("click",function(){
+            var taskId = $(this).data("id");
+            check = confirm("Ištrinti anketą? kurio id:"+taskId);
+            if(check){
+                $.post('/delete',{anketa:taskId},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+    });
+</script>

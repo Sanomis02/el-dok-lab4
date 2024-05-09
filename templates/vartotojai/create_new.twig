@@ -1,0 +1,38 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Registracijos puslapis</h1>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Registracija</h2>
+                <br>
+                <form method="post" action="/registruoti">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Paskyros vardas</label>
+                        <input name="vardas" type="text" class="form-control" id="exampleInputVardas1" aria-describedby="vardasHelp" placeholder="Iveskite varda">
+                        <small id="emailHelp" class="form-text text-muted">Si varda matys kiti naudotojai</small>
+                        <small id="emailHelp" class="form-text text-muted">Siuo vardu bus skelbiamos zinutes ir skelbimai</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Elektroninis paštas</label>
+                        <input name="pastas" type="email" class="form-control" id="exampleInputPastas1" aria-describedby="emailHelp" placeholder="Iveskite pasta">
+                        <small id="emailHelp" class="form-text text-muted">Si informacija bus naudojama tik autentifikavimui</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Slaptažodis</label>
+                        <input name="slaptazodis" type="password" class="form-control" id="exampleInputSlaptazodis1" placeholder="Iveskite slaptazodi">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Įeiti</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ include("footer.twig") }}

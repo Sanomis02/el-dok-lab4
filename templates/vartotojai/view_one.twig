@@ -1,0 +1,25 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>{{ vartotojas.vardas }}</h1>
+        <span><a style="color:white;" href="/redaguoti-vartotoja/{{ vartotojas.id }}"><i class="fa fa-edit fa-2x"></i></a></span>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Vartotojo Duomenys</h2>
+                <br>
+                <p>{{ vartotojas.vardas }}</p>
+                <p>{{ vartotojas.pastas }}</p>
+                <p>{{ vartotojas.slaptazodis }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{ include("footer.twig") }}

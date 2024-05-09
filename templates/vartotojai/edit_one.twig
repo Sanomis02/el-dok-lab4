@@ -1,0 +1,58 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>{{ vartotojas.vardas }}</h1>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>redaguoti vartotoja</h2>
+                <br>
+                {% if successMessage is not empty %}
+                <div class="alert alert-success" role="alert">
+                    {{ successMessage }}
+                </div>
+                {% endif %}
+                <form method="post" action="/atnaujinti-vartotoja/{{ vartotojas.id }}">
+                    <div class="form-group">
+                        <label for="ar_gali_skelbt">ar gali skelbt</label>
+                        <input name="ar_gali_skelbt" value="{{ vartotojas.ar_gali_skelbt }}" type="text" class="form-control" id="ar_gali_skelbt" placeholder="Enter Details">
+                    </div>
+                    <div class="form-group">
+                        <label for="vardas">Paskyros vardas</label>
+                        <input name="vardas" value="{{ vartotojas.vardas }}" type="text" class="form-control" id="vardas" placeholder="Enter Details">
+                    </div>
+                    <div class="form-group">
+                        <label for="pastas">pastas</label>
+                        <input name="pastas" value="{{ vartotojas.pastas }}" type="text" class="form-control" id="pastas" placeholder="Enter Details">
+                    </div>
+                    <div class="form-group">
+                        <label for="slaptazodis">slaptazodis</label>
+                        <input name="slaptazodis" value="{{ vartotojas.slaptazodis }}" type="text" class="form-control" id="slaptazodis" placeholder="Enter Details">
+                    </div>
+                    <div>
+                        <label for="prieiga">prieiga</label>
+                        <select class="form-control" name="prieiga" id="prieiga">
+                        <option value="{{ vartotojas.prieiga }}" selected>{{ vartotojas.prieiga }}</option>
+                        <option value="Kontrolierius">Kontrolierius</option>
+                        <option value="Administratorius">Administratorius</option>
+                        <option value="Prisijunges">Prisijunges</option>
+                        <option value="Neprisijunges">Neprisijunges</option>
+                    </select>
+                    </div>
+                    <div>
+                    <br><button type="submit" class="btn btn-primary">Patvirtinti</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{ include("footer.twig") }}

@@ -1,0 +1,139 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white" style="max-height: 100px;vertical-align: center;horiz-align: center;padding: 100px;">
+    <div class="container text-center">
+        <h4>Gyvūnų skelbimai</h4>
+        <form method="post" action="/skelbimo/search-pass-fragment">
+            <div class="form-group">
+                <input name="paieska" value="{{ sess_paiesk_fragm_skelbimas }}" type="text" class="form-control" id="paieska" placeholder="Įveskite fragmentą: bus ieškoma iš skelbiamo gyvuno rusies ir aprašymo">
+                <button type="submit" class="btn btn-primary">Ieškoti</button>
+            </div>
+        </form>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+                {% if ateita_is_paieskos_skelbimas is not empty %}
+                    <h2 align="center" style="background: #8fd19e">Skelbimo paieškos <b> {{ sess_paiesk_fragm_skelbimas }} </b> rezultatas</h2>
+
+                {% else %}
+                    <h2 align="center">Visi skelbimai </h2>
+
+                {% endif %}
+
+                <br>
+                <div class="card__item card__body" style="padding: 20px;">
+                    {% for skelbimas in skelbimai %}
+                        <div class="card" style="margin-bottom: 10px">
+                            <div class="card__wrapper">
+
+
+                                <div class="card__box">
+                                    <div class="card__item card__header">
+                                        <h6 class="card__item card__item--small card__label" align="center"><br>Anketiniai duomenys</h6>
+                                        <h4 class="card__item card__item--small card__title" align="center">{{ skelbimas.skelbimo_anketa.gyvuno_vardas }}</h4>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <img src="/assets/img/gyvuneliai/{{ skelbimas.skelbimo_anketa.pagr_nuotraukos_pav }}" class="img-fluid d-block mx-auto image" alt="dingęs" style="width: 400px" >
+                                    </div>
+
+                                    <div class="align-content-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                        <div class="row" style="margin: 0">
+                                            <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+
+                                                <span class="text-left">
+                                                    Amžius: {{ skelbimas.skelbimo_anketa.gyvuno_amzius }}
+                                                    <br>Gyvūno rūšis: {{ skelbimas.skelbimo_anketa.gyvuno_pav }}
+                                                    <br>Miestas: {{  skelbimas.skelbimo_anketa.miestas }}
+                                                    <br>Rajonas: {{ skelbimas.skelbimo_anketa.rajonas }}
+                                                    <br>Gatvė: {{ skelbimas.skelbimo_anketa.gatve }}
+                                                    <br>Apskritis: {{ skelbimas.skelbimo_anketa.apskritis }}
+                                                </span>
+                                            </div>
+                                            <div class="col-xl-5 text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 15px;">
+                                                <span class="text-left">
+                                                    skelbimai id : {{ skelbimas.id }}
+                                                    <br>Peržiūrų kiekis: {{ skelbimas.perziuros_kiekis }}
+                                                    <br>Gyvūno vardas: {{ skelbimas.skelbimo_anketa.gyvuno_vardas }}
+                                                    <br>sesija: {{ prieiga }}
+                                                    <br>lytis: {{ skelbimas.skelbimo_anketa.lytis }}
+                                                    <br>Dingimo laikas: {{ skelbimas.skelbimo_anketa.dingimo_data }}
+                                                    <br>Skelbimo laikas: {{ skelbimas.skelbimo_data }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin: 0">
+                                            <div class="col text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                                <span class="text-left">
+                                                    <b>Anketos tekstas:</b> {{ skelbimas.skelbimo_anketa.aprasymas }}
+                                                </span>
+                                                <span class="text-left">
+                                                    <br><b>Skelbimo tekstas:</b> {{ skelbimas.aprasymas }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin: 0">
+                                            <div class="col text-center" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+
+                                                <a href="/skelbimas/{{ skelbimas.id }}" target="_blank"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp;
+                                                {% if prieiga == "Administratorius" %}
+                                                    <a href="/redaguoti-skelbima/{{ skelbimas.id }}"><i class="fa fa-edit fa-fw"></i></a>&nbsp;&nbsp;
+                                                {% endif %}
+
+                                                {% if prieiga == "Kontrolierius" or prieiga == "Administratorius" %}
+                                                    <a href="javascript:void(0);" data-id="{{ skelbimas.id }}" class="delete-skelbima"><i class="fa fa-trash fa-fw"></i></a>
+                                                {% endif %}
+                                                {#                                         </span>#}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{ include("footer.twig") }}
+<script>
+    $(document).ready(function(){
+        $("#quick-save").on("click",function(){
+            console.log("Hello World");
+            var task = $("#quick-task").val();
+            if(task !== undefined && task !==""){
+                console.log(task);
+                $.post("/quickAdd",{task:task},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+        $(".delete-skelbima").on("click",function(){
+            var skelbimoId = $(this).data("id");
+            check = confirm("Ištrinti skelbima? kurio id: "+skelbimoId);
+            // var json = "json"
+            // dataType: "json",
+            if(check){
+                $.post('/istrinti-skelbima',{skelbimoId:skelbimoId},function(results){
+                    // if (results.update_result === 'gerai') {
+                     alert('Atsakymas iš post update_result : ' + results.update_result);
+                     alert('Atsakymas iš post update_message : ' + results.update_message);
+                    window.location = "/skelbimai";
+
+                },"json");
+            }
+            return false;
+        });
+    });
+</script>

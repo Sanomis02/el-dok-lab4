@@ -1,0 +1,35 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Nauja rūšis</h1>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Sukurkite gyvūno rūšį</h2>
+                <br>
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+
+                <form method="post" action="/prideti-gyvuna">
+                    <div class="form-group">
+                        <label for="pavadinimas">Pavadinimas</label>
+                        <input name="pavadinimas" type="text" class="form-control" id="pavadinimas" placeholder="įveskite rūšies pavadinimą">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Patvirtinkite</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{{ include("footer.twig") }}

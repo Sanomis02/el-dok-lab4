@@ -1,0 +1,64 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Pridėkite gyvūno rūšį</h1>
+        <input id="quick-pavadinimas" style="width:60%; padding:5px;" type="text" placeholder="Čia rašykite naują rūšį"/>
+        <button id="quick-save" class="btn btn-dark">Išsaugoti</button>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+                <h2>Gyvunai</h2>
+                <br>
+                <ul class="list-group">
+                    {% for todo in todos %}
+                    <li class="list-group-item">
+                        <span>{{ todo.pavadinimas }}</span>
+                        <span class="float-right">
+                           <a href="/gyvunas/{{ todo.id }}"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp;
+                            <a href="/redaguoti-gyvuna/{{ todo.id }}"><i class="fa fa-edit fa-fw"></i></a>&nbsp;&nbsp;
+                            <a href="javascript:void(0);" data-id="{{ todo.id }}" class="delete-gyvuna"><i class="fa fa-trash fa-fw"></i></a>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+{{ include("footer.twig") }}
+<script>
+    $(document).ready(function(){
+        $("#quick-save").on("click",function(){
+            console.log("Hello World");
+            var pavadinimas = $("#quick-pavadinimas").val();
+            if(pavadinimas !== undefined && pavadinimas !==""){
+                console.log(pavadinimas);
+                $.post("/quickAddOne",{pavadinimas:pavadinimas},function(results){
+                    window.location = "/gyvunai";
+                });
+            }
+            return false;
+        });
+        $(".delete-gyvuna").on("click",function(){
+            var gyvunoId = $(this).data("id");
+            check = confirm("Ištrinti gyvūną? Kurio id yra: " + gyvunoId);
+            if(check){
+                $.post('/istrinti',{gyvunoId:gyvunoId},function(){
+                    window.location = "/gyvunai";
+                });
+            }
+           return false;
+        });
+    });
+</script>
