@@ -61,16 +61,9 @@ class HomeController
     }
 
 
-
-
-
-
-
-
-
     public function login($request, $response, $args)
     {
-        $this->addData("pageTitle","įeiti to Projektą Gyvūnėliai");
+        $this->addData("pageTitle","įeiti į reklamos firmos puslapi");
         $data = $this->getData();
         $this->view->render($response,'login.twig',$data);
         return $response;

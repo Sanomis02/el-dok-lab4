@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ pageTitle }}</title>
+    <title>Reklamos projektai</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ base_url() }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,77 +25,39 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">{{ pageTitle }}</a>
+        <a class="navbar-brand js-scroll-trigger" href="/">Reklamos projektai</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
 
-                {% if prieiga is not empty %}
-                    <li class="nav-item dropdown" id="navbar-virsutin-titles1-turi-items-li">
-                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
-                            Skelbimai&nbsp;</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/skelbimai">visi skelbimai</a>
-                            <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-skelbima">Sukurti naują skelbimą</a>
-                        </div>
-                    </li>
-                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/login">Prisijungti</a>
+                </li>
 
-                {% if prieiga is not empty %}
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/iseiti">Atsijungti</a>
+                </li>
+
                 <li class="nav-item dropdown" id="navbar-virsutin-titles2-turi-items-li">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
-                        Anketos&nbsp;</a>
+                        Reklamos užsakymai&nbsp;</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/anketos">visos anketos</a>
-                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-anketa">Sukurti gyvūno anketą</a>
-{#                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items3-a" href="#">dar kas nors</a>#}
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/contracts">Visi užsakymai</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/create-contract">Užsakyti reklamą</a>
                     </div>
                 </li>
-                {% endif %}
 
-                {% if prieiga is not empty %}
-                <li class="nav-item dropdown" id="navbar-virsutin-titles4-turi-items-li">
+                <li class="nav-item dropdown" id="navbar-virsutin-titles2-turi-items-li">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
-                        Gyvūnų rūšys&nbsp;</a>
+                        Reklamos medžiaga&nbsp;</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/gyvunai">visi gyvūnai</a>
-                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/sukurti-gyvuna">Sukurti gyvūno rūšies aprašymą</a>
-                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items3-a" href="#">dar kas nors</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items1-a" href="/materials">Visos medžiagos</a>
+                        <a class="dropdown-item js-scroll-trigger" id="navbar-virsutin-titles4-items2-a" href="/create-material">Sukurti reklamos medžiagą</a>
                     </div>
                 </li>
-                {% endif %}
 
-                {% if prieiga=="Administratorius" %}
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/vartotojai">Visi vartotojai</a>
-                </li>
-                {% endif %}
-
-                {% if prieiga is empty %}
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/sukurti-vartotoja">Registracija</a>
-                </li>
-                {% endif %}
-
-                {% if prieiga is empty %}
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/login">Prisijungti</a>
-                    </li>
-                {% endif %}
-
-                {% if prieiga is not empty %}
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/iseiti">Išeiti</a>
-                    </li>
-                {% endif %}
-
-                {% if prieiga is not empty %}
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" style="color:red;">Statusas: {{ prieiga }}</a>
-                </li>
-                {% endif %}
             </ul>
         </div>
     </div>

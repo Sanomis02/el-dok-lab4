@@ -12,17 +12,24 @@
             <div class="col-lg-8 mx-auto">
                 <h2>Įėjimas</h2>
                 <br>
+
+                {% if loginFailedMessage is not empty %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ loginFailedMessage }}
+                    </div>
+                {% endif %}
+
                 <form method="post" action="/authenticateUser">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Elektroninis paštas</label>
-                        <input name="pastas" type="email" class="form-control" id="exampleInputPastas1" aria-describedby="emailHelp" placeholder="Iveskite pasta">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <label for="name">Paskyros vardas</label>
+                        <input name="name" type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Iveskite varda">
+                        <small id="nameHelp" class="form-text text-muted">Įveskite DBVS vardą</small>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Slaptažodis</label>
-                        <input name="slaptazodis" type="password" class="form-control" id="exampleInputSlaptazodis1" placeholder="Iveskite slaptazodi">
+                        <label for="slaptazodis">Slaptažodis</label>
+                        <input name="slaptazodis" type="password" class="form-control" id="inputPassword" placeholder="Iveskite slaptazodi">
                     </div>
-                    <button type="submit" class="btn btn-primary">Įeiti</button>
+                    <button type="submit" class="btn btn-primary">Jungtis</button>
                 </form>
             </div>
         </div>

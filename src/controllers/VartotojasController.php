@@ -10,6 +10,8 @@
 
 
 include_once __DIR__.'/../classes/Vartotojas.php';
+include_once __DIR__.'/../PdoWrapper.php';
+
 class VartotojasController
 {
     protected $view;
@@ -28,56 +30,48 @@ class VartotojasController
 
     public function login($request, $response, $args)
     {
-        $this->addData("pageTitle","Projektas gyvunai");
+        $this->addData("pageTitle","Reklamos projektai");
+        $this->addData("loginFailedMessage",$this->getFlashMessage("danger")[0]);
         $data = $this->getData();
         $this->view->render($response,'login.twig',$data);
         return $response;
     }
 
-    public function iseiti($request, $response, $args)
-    {
-        unset($_SESSION["prieiga"]);
-        return $response->withRedirect('/', 301);
-    }
-
     public function authenticateUser($request, $response, $args)
     {
-        if (isset($_SESSION["prieiga"])) {
-            unset($_SESSION["prieiga"]);
+        if (isset($_SESSION["prijungtas"])) {
+            unset($_SESSION["prijungtas"]);
         }
+
         if($request->isPost()){
 
             $authIsFormos = $request->getParsedBody();
-            $pastas = $authIsFormos["pastas"];
+            $vardas = $authIsFormos["name"];
             $slaptazodis = $authIsFormos["slaptazodis"];
 
-           if($vartotojas = $this->checkVartotoja($pastas, $slaptazodis)) {
-               switch ($vartotojas->getPrieiga()) {
-                   case 'Administratorius':
-                       $_SESSION["prieiga"] = "Administratorius";
-                       break;
-                   case 'Kontrolierius':
-                       $_SESSION["prieiga"] = "Kontrolierius";
-                       break;
-                   default:
-                       $_SESSION["prieiga"] = "Prisiregistraves";
-               }
-               return $response->withRedirect('/',301);
-           } else {
-               return $response->withRedirect('/login',301);
-//                var_dump("tuscias");
-           }
-            //$_SESSION["prieiga"] = "kita";
-            //patikrinam
-            //teisės geros - uždedam sesiją ir nukreipiam į pagrindinį
-            //teisės blogos - nukreipiam į autentifikaciją
-            //
-            // return $response->withRedirect('/login',301);
-            // return $response->withRedirect('/',301);
-//            var_dump($authIsFormos );
-//            var_dump($_SESSION["prieiga"]);
+            try {
+                $this->db = new PDO('mysql:host=animals_mysql;dbname=animals', $vardas, $slaptazodis);
+                $_SESSION["prijungtas"] = 1;
+
+                $_SESSION['vardas'] = $vardas;
+                $_SESSION['slaptazodis'] = $slaptazodis;
+
+                return $response->withRedirect('/',301);
+            } catch(PDOException $e) {
+                $this->addFlashMessage("danger", "Neteisingi prisijungimo duomenys");
+                return $response->withRedirect('/login', 301);
+            }
         }
     }
+
+    public function iseiti($request, $response, $args)
+    {
+        unset($_SESSION["prieiga"]);
+        unset($_SESSION['vardas']);
+        unset($_SESSION['slaptazodis']);
+        return $response->withRedirect('/', 301);
+    }
+
     private function checkVartotoja($pastas, $slaptazodis)
     {
         $query = $this->db->prepare('SELECT * FROM Vartotojai WHERE `pastas`=:pastas AND `slaptazodis`=:slaptazodis');

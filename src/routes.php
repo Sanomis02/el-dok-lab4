@@ -150,7 +150,15 @@ $app->get('/redaguoti-vartotoja/{id}', \VartotojasController::class . ':edit');
 $app->post('/atnaujinti-vartotoja/{id}', \VartotojasController::class . ':update');
 
 $app->post('/istrinti-vartotoja', \VartotojasController::class . ':deleteFromForm');
+//medziagos
+$app->get('/materials', \MedziagaController::class . ':viewAll');
 
+$app->get('/edit-material/{id}', \MedziagaController::class . ':edit');
 
+$app->post('/update-material/{id}', \MedziagaController::class . ':update');
 
+$app->get('/create-material', \MedziagaController::class . ':loadToFormForAdd');
 
+$app->post('/submit', \MedziagaController::class . ':addFromForm');
+//Uzsakymai
+$app->post('/contracts', \UzsakymasController::class . 'viewAll');

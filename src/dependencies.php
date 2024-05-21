@@ -49,6 +49,11 @@ $container['upload_directory'] = function ($c) {
     return __DIR__ . '/../public/assets/img/gyvuneliai';
 };
 
+$container['MedziagaController'] = function($c) {
+    $view = $c->get("view"); // retrieve the 'view' from the container
+    $flash= $c->get("flash");
+    return new MedziagaController($view, $flash);
+};
 
 // TodoController
 

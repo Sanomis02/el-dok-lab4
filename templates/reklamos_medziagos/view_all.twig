@@ -1,0 +1,92 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white" style="max-height: 100px;vertical-align: center;horiz-align: center;padding: 100px;">
+    <div class="container text-center">
+        <h4>Reklamos medžiagos</h4>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% if successMessage is not empty %}
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                {% endif %}
+
+                <h2 align="center">Visos firmos medžiagos</h2>
+
+                <br>
+                <div class="card__item card__body" style="padding: 20px;">
+                    {% for medziaga in medziagos %}
+                        <div class="card" style="margin-bottom: 10px">
+                            <div class="card__wrapper">
+                                <div class="card__box">
+                                    <div class="card__item card__header">
+                                        <h6 class="card__item card__item--small card__label" align="center"><br>medžiagos informacija</h6>
+                                    </div>
+                                    <div class="align-content-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                        <div class="row" style="margin: 0">
+                                            <div class="col text-left" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+                                                <span class="text-center">
+                                                    <b>Medžiagos duomenys:</b> {{ medziaga.turinys }}
+                                                </span>
+                                                <br>
+                                                <span class="text-center">
+                                                <b>Medžiagos tipas:</b> {{ medziaga.tipas }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin: 0">
+                                            <div class="col text-center" style="margin: 5px;margin-left: 15px;margin-bottom: 5px;">
+
+                                                <!-- <a href="/skelbimas/{{ skelbimas.id }}" target="_blank"><i class="fa fa-eye fa-fw"></i></a>&nbsp;&nbsp; -->
+                                                <a href="/edit-material/{{ medziaga.id }}"><i class="fa fa-edit fa-fw"></i></a>&nbsp;&nbsp;
+
+                                                <a href="javascript:void(0);" data-id="{{ medziaga.id }}" class="delete-medziaga"><i class="fa fa-trash fa-fw"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{ include("footer.twig") }}
+<script>
+    $(document).ready(function(){
+        $("#quick-save").on("click",function(){
+            console.log("Hello World");
+            var task = $("#quick-task").val();
+            if(task !== undefined && task !==""){
+                console.log(task);
+                $.post("/quickAdd",{task:task},function(results){
+                    window.location = "/";
+                });
+            }
+            return false;
+        });
+/*         $(".delete-skelbima").on("click",function(){ */
+/*             var skelbimoId = $(this).data("id"); */
+/*             check = confirm("Ištrinti skelbima? kurio id: "+skelbimoId); */
+/*             // var json = "json" */
+/*             // dataType: "json", */
+/*             if(check){ */
+/*                 $.post('/istrinti-skelbima',{skelbimoId:skelbimoId},function(results){ */
+/*                     // if (results.update_result === 'gerai') { */
+/*                      alert('Atsakymas iš post update_result : ' + results.update_result); */
+/*                      alert('Atsakymas iš post update_message : ' + results.update_message); */
+/*                     window.location = "/skelbimai"; */
+
+/*                 },"json"); */
+/*             } */
+/*             return false; */
+/*         }); */
+    });
+</script>

@@ -35,6 +35,8 @@ require __DIR__ . '/../src/classes/ToDo.php';
 // Register Controllers
 require __DIR__.'/../src/controllers/ToDoController.php';
 
+require __DIR__.'/../src/controllers/MedziagaController.php';
+
 // Register Gyvunas
 require __DIR__ . '/../src/controllers/GyvunasController.php';
 

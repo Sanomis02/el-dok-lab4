@@ -1,0 +1,39 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Sukurti naują medžiagą</h1>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Sukūrimo puslapis</h2>
+                <br>
+                <form method="post" action="/submit">
+                    <div class="form-group">
+                        <label for="turinys">Medžiagos turinys</label>
+                        <input name="input_turinys" type="text" class="form-control" id="input_turinys" aria-describedby="turinysHelp" placeholder="Iveskite reklamos informaciją">
+                        <small id="medziagosHelp" class="form-text text-muted">Įrašoma jūsų kuriama medija</small>
+                    </div>
+                    <div>
+                   <label for="type">Medžiagos tipas</label>
+                   <select class="form-control" name="tipas" id="tipas">
+                           <option value="{{ medziaga.tipas }}" selected>{{ medziaga.tipas }}</option>
+                           <option value="1">plakatas</option>
+                           <option value="2">skrajute</option>
+                           <option value="3">video</option>
+                           <option value="4">garsas</option>
+                   </select>
+                   </div>
+                   <br>
+                    <button type="submit" class="btn btn-primary">Sukurti</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ include("footer.twig") }}
